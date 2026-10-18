@@ -1,0 +1,219 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String   @id @default(cuid())
+  name             String
+  username         String   @unique
+  email            String   @unique
+  phone            String?
+  role             String   @default("USER") // USER, ADMIN
+  passwordHash     String   @map("password_hash")
+  pinHash          String?  @map("pin_hash")
+  avatarUrl        String?  @map("avatar_url")
+  subscriptionTier String   @default("FREE") @map("subscription_tier") // FREE, SILVER, GOLD, B2B
+  isActive         Boolean  @default(true) @map("is_active")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  settings         UserSettings?
+  wallets          Wallet[]
+  transactions     Transaction[]
+  budgetLimits     BudgetLimit[]
+  debts            Debt[]
+  workspaceMembers WorkspaceMember[]
+  notifications    Notification[]
+  customCategories Category[]
+
+  @@map("users")
+}
+
+model UserSettings {
+  userId                   String   @id @map("user_id")
+  theme                    String   @default("light")
+  locale                   String   @default("en")
+  activeCurrency           String   @default("IDR") @map("active_currency")
+  monthlyAllowance         BigInt   @default(6700000) @map("monthly_allowance")
+  spendingWarningThreshold Int      @default(80) @map("spending_warning_threshold")
+  ocrSpeed                 String   @default("standard") @map("ocr_speed")
+  ocrAutoCat               Boolean  @default(true) @map("ocr_auto_cat")
+  ocrReview                Boolean  @default(true) @map("ocr_review")
+  sessionTimeoutMs         Int      @default(180000) @map("session_timeout_ms")
+  customCurrencies         Json     @default("[]") @map("custom_currencies")
+  notificationsEnabled     Boolean  @default(true) @map("notifications_enabled")
+  soundEnabled             Boolean  @default(true) @map("sound_enabled")
+  updatedAt                DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
+
+model Category {
+  id           String   @id
+  slug         String   @unique
+  nameKey      String   @map("name_key")
+  fallbackName String   @map("fallback_name")
+  icon         String
+  color        String
+  type         String   // EXPENSE, INCOME
+  isSystem     Boolean  @default(true) @map("is_system")
+  userId       String?  @map("user_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  budgetLimits BudgetLimit[]
+
+  @@map("categories")
+}
+
+model Wallet {
+  id            String   @id @default(cuid())
+  userId        String   @map("user_id")
+  name          String
+  type          String   // CASH, BANK, E_WALLET, SAVINGS
+  accountNumber String?  @map("account_number")
+  balance       BigInt   @default(0)
+  color         String?  @default("#4D8DBA")
+  isShared      Boolean  @default(false) @map("is_shared")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@map("wallets")
+}
+
+model Transaction {
+  id             String   @id @default(cuid())
+  userId         String   @map("user_id")
+  walletId       String?  @map("wallet_id")
+  categoryId     String   @map("category_id")
+  categoryName   String   @map("category_name")
+  categorySlug   String   @map("category_slug")
+  type           String   // EXPENSE, INCOME
+  amount         BigInt
+  currency       String?  @default("IDR")
+  currencySymbol String?  @default("Rp") @map("currency_symbol")
+  date           DateTime
+  notes          String?
+  receipt        Json?
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet   Wallet?   @relation(fields: [walletId], references: [id], onDelete: SetNull)
+  category Category  @relation(fields: [categoryId], references: [id])
+
+  @@map("transactions")
+}
+
+model BudgetLimit {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  categoryId   String   @map("category_id")
+  categorySlug String   @map("category_slug")
+  limitAmount  BigInt   @map("limit_amount")
+  period       String   // YYYY-MM
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, categoryId, period], name: "uq_user_cat_period")
+  @@map("budget_limits")
+}
+
+model Debt {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  type       String   // DEBT, RECEIVABLE
+  personName String   @map("person_name")
+  amount     BigInt
+  dueDate    String   @map("due_date")
+  notes      String?
+  isSettled  Boolean  @default(false) @map("is_settled")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("debts")
+}
+
+model WorkspaceMember {
+  id        String   @id @default(cuid())
+  ownerId   String   @map("owner_id")
+  name      String
+  email     String
+  role      String   @default("MEMBER") // OWNER, ADMIN, MEMBER
+  avatarUrl String?  @map("avatar_url")
+  status    String   @default("ACTIVE") // ACTIVE, INVITED
+  createdAt DateTime @default(now()) @map("created_at")
+
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@map("workspace_members")
+}
+
+model Mitra {
+  id                 String   @id @default(cuid())
+  businessName       String   @map("business_name")
+  ownerName          String   @map("owner_name")
+  email              String
+  phone              String
+  category           String
+  verificationStatus String   @default("PENDING") @map("verification_status") // PENDING, VERIFIED, REJECTED
+  submissionDate     DateTime @default(now()) @map("submission_date")
+  documentType       String   @map("document_type")
+  documentNumber     String   @map("document_number")
+  notes              String?
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@map("mitra")
+}
+
+model Complaint {
+  id             String   @id @default(cuid())
+  ticketId       String   @unique @map("ticket_id")
+  userId         String   @map("user_id")
+  userName       String   @map("user_name")
+  userEmail      String   @map("user_email")
+  title          String
+  description    String
+  priority       String   @default("MEDIUM") // LOW, MEDIUM, HIGH
+  status         String   @default("OPEN") // OPEN, IN_PROGRESS, RESOLVED
+  resolutionNote String?  @map("resolution_note")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("complaints")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  title     String
+  message   String
+  titleEn   String?  @map("title_en")
+  messageEn String?  @map("message_en")
+  type      String   @default("INFO") // WARNING, ALERT, INFO, SUCCESS
+  isRead    Boolean  @default(false) @map("is_read")
+  link      String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
