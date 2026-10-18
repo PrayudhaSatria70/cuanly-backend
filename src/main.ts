@@ -6,6 +6,12 @@ import { AllExceptionsFilter } from './common/filters/http-exception.filter';
 
 import { json, urlencoded } from 'express';
 
+// Global BigInt JSON serialization for Prisma
+(BigInt.prototype as any).toJSON = function () {
+  const int = Number.parseInt(this.toString(), 10);
+  return Number.isNaN(int) ? this.toString() : int;
+};
+
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
   const app = await NestFactory.create(AppModule);
