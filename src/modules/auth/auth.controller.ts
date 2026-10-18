@@ -87,6 +87,19 @@ export class AuthController {
     return this.authService.updateProfile(userId, { avatarUrl: avatar });
   }
 
+  @Put('subscription')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update user subscription tier/plan (FREE, SILVER, GOLD, B2B)' })
+  @ApiResponse({ status: 200, description: 'Subscription updated successfully' })
+  async updateSubscription(
+    @CurrentUser('id') userId: string,
+    @Body() body: { tier?: string; plan?: string },
+  ) {
+    const tier = body.tier || body.plan || 'FREE';
+    return this.authService.updateSubscription(userId, tier);
+  }
+
   @Post('logout')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()

@@ -26,4 +26,14 @@ export class UpdateProfileDto {
   @IsOptional()
   @IsString()
   avatarUrl?: string;
+
+  @ApiPropertyOptional({ example: 'GOLD', description: 'Subscription tier (FREE, SILVER, GOLD, B2B)' })
+  @IsOptional()
+  @IsString()
+  subscriptionTier?: string;
+
+  @ApiPropertyOptional({ example: 'GOLD', description: 'Subscription plan alias (FREE, SILVER, GOLD, B2B)' })
+  @IsOptional()
+  @IsString()
+  subscriptionPlan?: string;
 }

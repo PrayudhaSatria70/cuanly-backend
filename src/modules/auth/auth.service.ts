@@ -23,7 +23,11 @@ export class AuthService {
 
   async login(loginDto: LoginDto) {
     const cleanId = loginDto.identifier.trim().toLowerCase();
-    const cleanPass = loginDto.password.trim();
+    const cleanPass = (loginDto.password || loginDto.pin || '').trim();
+
+    if (!cleanPass) {
+      throw new UnauthorizedException('Password or PIN is required');
+    }
 
     let user: any = null;
     try {
@@ -123,6 +127,10 @@ export class AuthService {
     }
 
     const { passwordHash, pinHash, ...safeUser } = user;
+    const formattedUser = {
+      ...safeUser,
+      subscriptionPlan: safeUser.subscriptionTier || 'FREE',
+    };
     const token = this.jwtService.sign({
       sub: user.id,
       username: user.username,
@@ -133,14 +141,14 @@ export class AuthService {
     return {
       success: true,
       token,
-      user: safeUser,
+      user: formattedUser,
     };
   }
 
   async register(registerDto: RegisterDto) {
     const cleanEmail = registerDto.email.trim().toLowerCase();
     const cleanName = registerDto.name.trim();
-    const cleanPass = registerDto.password.trim();
+    const cleanPass = (registerDto.password || registerDto.pin || '').trim();
     const resolvedUsername = registerDto.username
       ? registerDto.username.trim().toLowerCase().replace(/[^a-z0-9_]/g, '')
       : cleanEmail.split('@')[0].replace(/[^a-z0-9_]/g, '');
@@ -220,6 +228,10 @@ export class AuthService {
     this.inMemoryUsers.set(resolvedUsername, { ...newUser, passwordHash: hash, pinHash: hash });
 
     const { passwordHash, pinHash, ...safeUser } = newUser;
+    const formattedUser = {
+      ...safeUser,
+      subscriptionPlan: safeUser.subscriptionTier || 'FREE',
+    };
     const token = this.jwtService.sign({
       sub: newUser.id,
       username: newUser.username,
@@ -230,7 +242,7 @@ export class AuthService {
     return {
       success: true,
       token,
-      user: safeUser,
+      user: formattedUser,
     };
   }
 
@@ -246,8 +258,12 @@ export class AuthService {
     const cleanOld = dto.oldPassword.trim();
     const cleanNew = dto.newPassword.trim();
 
-    if (cleanNew.length < 6) {
-      throw new BadRequestException('New password must be at least 6 characters');
+    if (cleanNew.length < 4) {
+      throw new BadRequestException('New password or PIN must be at least 4 characters or digits');
+    }
+
+    if (dto.confirmPassword && dto.confirmPassword.trim() !== cleanNew) {
+      throw new BadRequestException('Password confirmation does not match');
     }
 
     const isOldValid =
@@ -281,6 +297,13 @@ export class AuthService {
     if (dto.name !== undefined) dataToUpdate.name = dto.name.trim();
     if (dto.phone !== undefined) dataToUpdate.phone = dto.phone.trim();
     if (dto.avatarUrl !== undefined) dataToUpdate.avatarUrl = dto.avatarUrl && dto.avatarUrl.trim() ? dto.avatarUrl.trim() : null;
+
+    if (dto.subscriptionTier !== undefined || dto.subscriptionPlan !== undefined) {
+      const tier = (dto.subscriptionTier || dto.subscriptionPlan || 'FREE').toUpperCase();
+      if (['FREE', 'SILVER', 'GOLD', 'B2B'].includes(tier)) {
+        dataToUpdate.subscriptionTier = tier;
+      }
+    }
 
     if (dto.username !== undefined) {
       const cleanUsername = dto.username.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
@@ -318,6 +341,10 @@ export class AuthService {
       });
 
       const { passwordHash, pinHash, ...safeUser } = updatedUser;
+      const formattedUser = {
+        ...safeUser,
+        subscriptionPlan: safeUser.subscriptionTier || 'FREE',
+      };
       for (const [key, val] of this.inMemoryUsers.entries()) {
         if (val.id === userId) {
           this.inMemoryUsers.set(key, { ...val, ...dataToUpdate });
@@ -325,7 +352,7 @@ export class AuthService {
       }
       return {
         success: true,
-        user: safeUser,
+        user: formattedUser,
       };
     } catch {
       let found: any = null;
@@ -343,7 +370,10 @@ export class AuthService {
       const { passwordHash, pinHash, ...safeUser } = found;
       return {
         success: true,
-        user: safeUser,
+        user: {
+          ...safeUser,
+          subscriptionPlan: safeUser.subscriptionTier || 'FREE',
+        },
       };
     }
   }
@@ -392,7 +422,18 @@ export class AuthService {
     const { passwordHash, pinHash, ...safeUser } = user;
     return {
       success: true,
-      user: safeUser,
+      user: {
+        ...safeUser,
+        subscriptionPlan: safeUser.subscriptionTier || 'FREE',
+      },
     };
+  }
+
+  async updateSubscription(userId: string, tier: string) {
+    const validTier = tier.toUpperCase();
+    if (!['FREE', 'SILVER', 'GOLD', 'B2B'].includes(validTier)) {
+      throw new BadRequestException('Invalid subscription tier. Supported: FREE, SILVER, GOLD, B2B');
+    }
+    return this.updateProfile(userId, { subscriptionTier: validTier });
   }
 }

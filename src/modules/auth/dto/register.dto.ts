@@ -12,11 +12,17 @@ export class RegisterDto {
   @IsEmail({}, { message: 'Valid email address is required' })
   email: string;
 
-  @ApiProperty({ example: '123456', description: 'Password or 6-digit transaction PIN' })
+  @ApiProperty({ example: '123456', description: 'Password or 4-digit/6-digit transaction PIN' })
   @IsNotEmpty({ message: 'Password or PIN is required' })
   @IsString()
-  @MinLength(4, { message: 'Password or PIN must be at least 4 characters' })
+  @MinLength(4, { message: 'Password or PIN must be at least 4 characters or digits' })
   password: string;
+
+  @ApiPropertyOptional({ example: '1234', description: 'Alternative PIN field' })
+  @IsOptional()
+  @IsString()
+  @MinLength(4, { message: 'PIN must be at least 4 digits' })
+  pin?: string;
 
   @ApiPropertyOptional({ example: 'budisantoso', description: 'Custom username (optional)' })
   @IsOptional()

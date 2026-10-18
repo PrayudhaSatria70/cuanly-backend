@@ -15,6 +15,10 @@ import { OcrModule } from './modules/ocr/ocr.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { TransaksiModule } from './modules/transaksi/transaksi.module';
 import { BudgetModule } from './modules/budget/budget.module';
+import { BerandaModule } from './modules/beranda/beranda.module';
+import { ProfilModule } from './modules/profil/profil.module';
+import { SettingsModule } from './modules/settings/settings.module';
+import { PricingModule } from './modules/pricing/pricing.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -43,6 +47,10 @@ import { AppController } from './app.controller';
     WorkspaceModule,
     OcrModule,
     AdminModule,
+    BerandaModule,
+    ProfilModule,
+    SettingsModule,
+    PricingModule,
   ],
   providers: [
     {

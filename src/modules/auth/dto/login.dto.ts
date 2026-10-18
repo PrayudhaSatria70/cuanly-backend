@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class LoginDto {
   @ApiProperty({
@@ -10,11 +10,19 @@ export class LoginDto {
   @IsString()
   identifier: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 'admin123',
-    description: 'Password or 6-digit PIN of the account',
+    description: 'Password or PIN of the account',
   })
-  @IsNotEmpty({ message: 'Password or PIN is required' })
+  @IsOptional()
   @IsString()
-  password: string;
+  password?: string;
+
+  @ApiPropertyOptional({
+    example: '1234',
+    description: 'Alternative PIN field',
+  })
+  @IsOptional()
+  @IsString()
+  pin?: string;
 }
