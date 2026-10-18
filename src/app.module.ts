@@ -15,8 +15,10 @@ import { OcrModule } from './modules/ocr/ocr.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { TransaksiModule } from './modules/transaksi/transaksi.module';
 import { BudgetModule } from './modules/budget/budget.module';
+import { AppController } from './app.controller';
 
 @Module({
+  controllers: [AppController],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
