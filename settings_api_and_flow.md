@@ -166,3 +166,19 @@ Response (200 OK)
 - **Database:** Neon Serverless PostgreSQL (`ap-southeast-1` Singapore)
 - **OpenAPI / Swagger:** `https://cuanly-backend.vercel.app/api/docs`
 - **Build Script:** `npm run vercel-build` (`prisma generate && nest build`)
+
+---
+
+## 7. Tri-Repository Synchronization & Wiring Status
+
+Dokumentasi sinkronisasi tri-repo (`cuanly-database`, `cuanly-backend`, `cuanly-frontend`):
+- **Skema Prisma**: Sinkron 1:1 antara `cuanly-database/prisma/schema.prisma` dan `cuanly-backend/prisma/schema.prisma` (14 model dan 9 enum). Validasi `prisma validate` berhasil.
+- **Seeding & Data Live**: `prisma/seed.ts` dan berkas seed (`seeds/admin_financial_data.json`, `seeds/admin_live_data.sql`, `seeds/seed.sql`) telah disalin dan disinkronkan dari `cuanly-database` ke `cuanly-backend`.
+- **Port & Network Wiring**:
+  - Backend aktif pada port `5000` (`http://localhost:5000/api/v1`).
+  - CORS dikonfigurasi mengizinkan `http://localhost:3000` dan `http://127.0.0.1:3000`.
+  - Frontend terhubung melalui `NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api/v1`.
+  - Database terhubung ke PostgreSQL lokal `postgresql://postgres:postgres@localhost:5432/cuanly_db?schema=public`.
+- **Kompilasi & Build Backend**:
+  - `tsc --noEmit`: **0 errors** (PASSED).
+  - `nest build`: **dist/ bundle compiled** (PASSED).

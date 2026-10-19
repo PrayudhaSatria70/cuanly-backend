@@ -1,0 +1,692 @@
+{
+  "user": {
+    "id": "usr_live_admin",
+    "name": "Administrator Cuanly",
+    "username": "admin",
+    "email": "admin@cuanly.com",
+    "role": "ADMIN",
+    "subscriptionTier": "B2B"
+  },
+  "wallets": [
+    {
+      "id": "wal_admin_cash",
+      "userId": "usr_live_admin",
+      "name": "Dompet Tunai Kas Kecil",
+      "type": "CASH",
+      "accountNumber": null,
+      "balance": 3850000,
+      "color": "#10B981",
+      "isShared": false
+    },
+    {
+      "id": "wal_admin_bca",
+      "userId": "usr_live_admin",
+      "name": "BCA Prioritas Bisnis",
+      "type": "BANK",
+      "accountNumber": "8820192831",
+      "balance": 54200000,
+      "color": "#0284C7",
+      "isShared": false
+    },
+    {
+      "id": "wal_admin_mandiri",
+      "userId": "usr_live_admin",
+      "name": "Mandiri Giro Operasional",
+      "type": "BANK",
+      "accountNumber": "1370018291028",
+      "balance": 28650000,
+      "color": "#2563EB",
+      "isShared": false
+    },
+    {
+      "id": "wal_admin_gopay",
+      "userId": "usr_live_admin",
+      "name": "GoPay Merchant & OVO Bisnis",
+      "type": "E_WALLET",
+      "accountNumber": "0811-9876-5432",
+      "balance": 4750000,
+      "color": "#06B6D4",
+      "isShared": false
+    },
+    {
+      "id": "wal_admin_shared",
+      "userId": "usr_live_admin",
+      "name": "Shared Treasury Workspace Tim",
+      "type": "BANK",
+      "accountNumber": "7190281990",
+      "balance": 95000000,
+      "color": "#8B5CF6",
+      "isShared": true,
+      "sharedRole": "OWNER"
+    }
+  ],
+  "budgetLimits": [
+    {
+      "id": "bud_admin_food",
+      "userId": "usr_live_admin",
+      "categoryId": "cat_food",
+      "categorySlug": "makanan",
+      "limitAmount": 4500000,
+      "period": "2026-10"
+    },
+    {
+      "id": "bud_admin_transport",
+      "userId": "usr_live_admin",
+      "categoryId": "cat_transport",
+      "categorySlug": "transportasi",
+      "limitAmount": 2500000,
+      "period": "2026-10"
+    },
+    {
+      "id": "bud_admin_shopping",
+      "userId": "usr_live_admin",
+      "categoryId": "cat_shopping",
+      "categorySlug": "belanja",
+      "limitAmount": 6000000,
+      "period": "2026-10"
+    },
+    {
+      "id": "bud_admin_entertainment",
+      "userId": "usr_live_admin",
+      "categoryId": "cat_entertainment",
+      "categorySlug": "hiburan",
+      "limitAmount": 3000000,
+      "period": "2026-10"
+    },
+    {
+      "id": "bud_admin_health",
+      "userId": "usr_live_admin",
+      "categoryId": "cat_health",
+      "categorySlug": "kesehatan",
+      "limitAmount": 2000000,
+      "period": "2026-10"
+    },
+    {
+      "id": "bud_admin_other",
+      "userId": "usr_live_admin",
+      "categoryId": "cat_other",
+      "categorySlug": "lainnya",
+      "limitAmount": 1500000,
+      "period": "2026-10"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx_admin_01",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_salary",
+      "categoryName": "Gaji Bulanan",
+      "categorySlug": "gaji",
+      "type": "INCOME",
+      "amount": 35000000,
+      "date": "2026-10-01T08:00:00Z",
+      "notes": "Gaji Eksekutif & Tunjangan Direksi Cuanly Oktober 2026"
+    },
+    {
+      "id": "tx_admin_02",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_mandiri",
+      "categoryId": "cat_freelance",
+      "categoryName": "Freelance & Bisnis",
+      "categorySlug": "freelance",
+      "type": "INCOME",
+      "amount": 24500000,
+      "date": "2026-10-04T10:30:00Z",
+      "notes": "Retainer Konsultasi Arsitektur FinTech PT Nusantara"
+    },
+    {
+      "id": "tx_admin_03",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_investment",
+      "categoryName": "Investasi & Bunga",
+      "categorySlug": "investasi",
+      "type": "INCOME",
+      "amount": 4850000,
+      "date": "2026-10-06T14:15:00Z",
+      "notes": "Dividen Saham BBCA Q3 2026 (60 Lot)"
+    },
+    {
+      "id": "tx_admin_04",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_shared",
+      "categoryId": "cat_freelance",
+      "categoryName": "Freelance & Bisnis",
+      "categorySlug": "freelance",
+      "type": "INCOME",
+      "amount": 18000000,
+      "date": "2026-10-08T11:00:00Z",
+      "notes": "Pembayaran Lisensi Paket B2B 5 Client Baru"
+    },
+    {
+      "id": "tx_admin_05",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_investment",
+      "categoryName": "Investasi & Bunga",
+      "categorySlug": "investasi",
+      "type": "INCOME",
+      "amount": 1250000,
+      "date": "2026-10-12T09:00:00Z",
+      "notes": "Yield Bulanan Reksadana Sucorinvest Stable Fund"
+    },
+    {
+      "id": "tx_admin_06",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_shopping",
+      "categoryName": "Belanja",
+      "categorySlug": "belanja",
+      "type": "EXPENSE",
+      "amount": 28500000,
+      "date": "2026-10-03T13:45:00Z",
+      "notes": "Pengadaan Laptop Apple MacBook Pro M3 untuk Tech Lead",
+      "receipt": {
+        "merchant": "iBox Grand Indonesia",
+        "date": "2026-10-03",
+        "totalAmount": 28500000,
+        "receiptImageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=80",
+        "lineItems": [
+          {
+            "id": "item_ibox_1",
+            "name": "MacBook Pro 14\" M3 Pro 18GB/512GB",
+            "price": 28500000,
+            "quantity": 1
+          }
+        ],
+        "confidenceScore": 99
+      }
+    },
+    {
+      "id": "tx_admin_07",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_mandiri",
+      "categoryId": "cat_other",
+      "categoryName": "Lainnya",
+      "categorySlug": "lainnya",
+      "type": "EXPENSE",
+      "amount": 4500000,
+      "date": "2026-10-02T10:00:00Z",
+      "notes": "Sewa Private Office Coworking BSD City Oktober 2026"
+    },
+    {
+      "id": "tx_admin_08",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_other",
+      "categoryName": "Lainnya",
+      "categorySlug": "lainnya",
+      "type": "EXPENSE",
+      "amount": 2450000,
+      "date": "2026-10-05T02:00:00Z",
+      "notes": "Billing AWS Cloud & Neon PostgreSQL Serverless Cluster"
+    },
+    {
+      "id": "tx_admin_09",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_cash",
+      "categoryId": "cat_food",
+      "categoryName": "Makanan & Minuman",
+      "categorySlug": "makanan",
+      "type": "EXPENSE",
+      "amount": 1250000,
+      "date": "2026-10-07T13:00:00Z",
+      "notes": "Lunch Meeting dengan Potential Venture Partner di Osteria Gia",
+      "receipt": {
+        "merchant": "Osteria Gia Plaza Indonesia",
+        "date": "2026-10-07",
+        "totalAmount": 1250000,
+        "receiptImageUrl": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&auto=format&fit=crop&q=80",
+        "lineItems": [
+          {
+            "id": "item_osteria_1",
+            "name": "Truffle Carbonara & Ribeye Steak",
+            "price": 950000,
+            "quantity": 1
+          },
+          {
+            "id": "item_osteria_2",
+            "name": "San Pellegrino & Dessert Panna Cotta",
+            "price": 300000,
+            "quantity": 1
+          }
+        ],
+        "confidenceScore": 98
+      }
+    },
+    {
+      "id": "tx_admin_10",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_gopay",
+      "categoryId": "cat_food",
+      "categoryName": "Makanan & Minuman",
+      "categorySlug": "makanan",
+      "type": "EXPENSE",
+      "amount": 680000,
+      "date": "2026-10-09T18:30:00Z",
+      "notes": "Makan malam tim sprint review di Sushi Tei"
+    },
+    {
+      "id": "tx_admin_11",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_transport",
+      "categoryName": "Transportasi",
+      "categorySlug": "transportasi",
+      "type": "EXPENSE",
+      "amount": 600000,
+      "date": "2026-10-10T07:15:00Z",
+      "notes": "Tiket Kereta Cepat Whoosh Executive PP Jakarta-Bandung (Kunjungan Klien)"
+    },
+    {
+      "id": "tx_admin_12",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_cash",
+      "categoryId": "cat_transport",
+      "categoryName": "Transportasi",
+      "categorySlug": "transportasi",
+      "type": "EXPENSE",
+      "amount": 850000,
+      "date": "2026-10-11T16:00:00Z",
+      "notes": "Bensin Shell V-Power & Saldo e-Toll Operasional"
+    },
+    {
+      "id": "tx_admin_13",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_mandiri",
+      "categoryId": "cat_health",
+      "categoryName": "Kesehatan",
+      "categorySlug": "kesehatan",
+      "type": "EXPENSE",
+      "amount": 1750000,
+      "date": "2026-10-13T10:00:00Z",
+      "notes": "Medical Check-up & Vitamin C Booster Tim"
+    },
+    {
+      "id": "tx_admin_14",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_shopping",
+      "categoryName": "Belanja",
+      "categorySlug": "belanja",
+      "type": "EXPENSE",
+      "amount": 1950000,
+      "date": "2026-10-14T15:20:00Z",
+      "notes": "Monitor Dell UltraSharp 27\" 4K untuk Dashboard Monitoring"
+    },
+    {
+      "id": "tx_admin_15",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_gopay",
+      "categoryId": "cat_entertainment",
+      "categoryName": "Hiburan",
+      "categorySlug": "hiburan",
+      "type": "EXPENSE",
+      "amount": 1450000,
+      "date": "2026-10-15T19:00:00Z",
+      "notes": "Team Bonding Bowling & Dinner di Spincity BSD"
+    },
+    {
+      "id": "tx_admin_16",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_cash",
+      "categoryId": "cat_food",
+      "categoryName": "Makanan & Minuman",
+      "categorySlug": "makanan",
+      "type": "EXPENSE",
+      "amount": 420000,
+      "date": "2026-10-16T11:30:00Z",
+      "notes": "Stok Kopi Specialty Beans & Susu Oat Pantry Kantor"
+    },
+    {
+      "id": "tx_admin_17",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_other",
+      "categoryName": "Lainnya",
+      "categorySlug": "lainnya",
+      "type": "EXPENSE",
+      "amount": 1200000,
+      "date": "2026-10-17T08:30:00Z",
+      "notes": "Langganan ChatGPT Team & GitHub Enterprise Suite"
+    },
+    {
+      "id": "tx_admin_18",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_mandiri",
+      "categoryId": "cat_transport",
+      "categoryName": "Transportasi",
+      "categorySlug": "transportasi",
+      "type": "EXPENSE",
+      "amount": 280000,
+      "date": "2026-10-17T17:15:00Z",
+      "notes": "Bluebird Silver Bird Bandara ke Headquarter"
+    },
+    {
+      "id": "tx_admin_19",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_cash",
+      "categoryId": "cat_shopping",
+      "categoryName": "Belanja",
+      "categorySlug": "belanja",
+      "type": "EXPENSE",
+      "amount": 580000,
+      "date": "2026-10-18T14:00:00Z",
+      "notes": "Perlengkapan Kebersihan & ATK Superindo",
+      "receipt": {
+        "merchant": "Superindo Supermarket",
+        "date": "2026-10-18",
+        "totalAmount": 580000,
+        "receiptImageUrl": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=80",
+        "lineItems": [
+          {
+            "id": "item_sup_1",
+            "name": "Paper Towel & Hand Sanitizer",
+            "price": 240000,
+            "quantity": 2
+          },
+          {
+            "id": "item_sup_2",
+            "name": "Coffee Refill & Mineral Water Galon",
+            "price": 340000,
+            "quantity": 1
+          }
+        ],
+        "confidenceScore": 97
+      }
+    },
+    {
+      "id": "tx_admin_20",
+      "userId": "usr_live_admin",
+      "walletId": "wal_admin_bca",
+      "categoryId": "cat_food",
+      "categoryName": "Makanan & Minuman",
+      "categorySlug": "makanan",
+      "type": "EXPENSE",
+      "amount": 350000,
+      "date": "2026-10-19T12:00:00Z",
+      "notes": "Makan Siang Soto Betawi & Jus Alpukat bersama tim developer"
+    }
+  ],
+  "debts": [
+    {
+      "id": "debt_admin_01",
+      "userId": "usr_live_admin",
+      "type": "RECEIVABLE",
+      "personName": "PT Sinar Digital Abadi (Client Enterprise)",
+      "amount": 18000000,
+      "dueDate": "2026-11-20",
+      "notes": "Piutang Termin 2 Jasa Pengembangan Backend & PostgreSQL Optimization",
+      "isSettled": false,
+      "tenorMonths": 3,
+      "interestRate": 0,
+      "installmentAmount": 6000000,
+      "paidAmount": 6000000
+    },
+    {
+      "id": "debt_admin_02",
+      "userId": "usr_live_admin",
+      "type": "RECEIVABLE",
+      "personName": "Hendro Wijaya (Owner Kopi Kenangan Jaya)",
+      "amount": 5500000,
+      "dueDate": "2026-10-31",
+      "notes": "Talangan Bridging Mesin POS Kasir & Tablet Kasir Cabang 2",
+      "isSettled": false,
+      "tenorMonths": 2,
+      "interestRate": 0,
+      "installmentAmount": 2750000,
+      "paidAmount": 2750000
+    },
+    {
+      "id": "debt_admin_03",
+      "userId": "usr_live_admin",
+      "type": "RECEIVABLE",
+      "personName": "Dr. Maria Ulfa (Apotek Sehat Sentosa)",
+      "amount": 7800000,
+      "dueDate": "2026-11-15",
+      "notes": "Invoice Layanan Custom Budgeting & Auto-Sync Transaksi Farmasi",
+      "isSettled": false,
+      "tenorMonths": 1,
+      "interestRate": 0,
+      "installmentAmount": 7800000,
+      "paidAmount": 0
+    },
+    {
+      "id": "debt_admin_04",
+      "userId": "usr_live_admin",
+      "type": "DEBT",
+      "personName": "Vendor IT Distributor Jaya Sentosa",
+      "amount": 12000000,
+      "dueDate": "2026-12-10",
+      "notes": "Cicilan Pengadaan Server Rack Backup & UPS Kantor",
+      "isSettled": false,
+      "tenorMonths": 6,
+      "interestRate": 5,
+      "installmentAmount": 2100000,
+      "paidAmount": 4200000
+    },
+    {
+      "id": "debt_admin_05",
+      "userId": "usr_live_admin",
+      "type": "DEBT",
+      "personName": "Bank Mandiri (Kredit Modal Kerja Bisnis)",
+      "amount": 25000000,
+      "dueDate": "2026-11-25",
+      "notes": "Fasilitas Modal Kerja Operasional B2B Multi-Tenant Platform",
+      "isSettled": false,
+      "tenorMonths": 12,
+      "interestRate": 6,
+      "installmentAmount": 2208333,
+      "paidAmount": 11041665
+    },
+    {
+      "id": "debt_admin_06",
+      "userId": "usr_live_admin",
+      "type": "DEBT",
+      "personName": "Kantor Pajak Pratama (PPh Final UMKM PP 23)",
+      "amount": 1450000,
+      "dueDate": "2026-10-25",
+      "notes": "Kewajiban Setoran PPh Final Masa Pajak September 2026",
+      "isSettled": false,
+      "tenorMonths": 1,
+      "interestRate": 0,
+      "installmentAmount": 1450000,
+      "paidAmount": 0
+    }
+  ],
+  "workspaceMembers": [
+    {
+      "id": "mem_admin_01",
+      "ownerId": "usr_live_admin",
+      "name": "Administrator Cuanly (Anda)",
+      "email": "admin@cuanly.com",
+      "role": "OWNER",
+      "avatarUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "mem_admin_02",
+      "ownerId": "usr_live_admin",
+      "name": "Siti Rahmawati, S.E. (Head of Finance)",
+      "email": "siti.rahma@cuanly.com",
+      "role": "ADMIN",
+      "avatarUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "mem_admin_03",
+      "ownerId": "usr_live_admin",
+      "name": "Dimas Arya Prasetya (VP Business Dev)",
+      "email": "dimas.arya@cuanly.com",
+      "role": "ADMIN",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "mem_admin_04",
+      "ownerId": "usr_live_admin",
+      "name": "Nadia Safitri (Treasury Specialist)",
+      "email": "nadia.safitri@cuanly.com",
+      "role": "MEMBER",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "mem_admin_05",
+      "ownerId": "usr_live_admin",
+      "name": "Kevin Sanjaya, CPA (External Auditor)",
+      "email": "kevin.sanjaya@mitracuan.id",
+      "role": "MEMBER",
+      "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+      "status": "INVITED"
+    }
+  ],
+  "investmentAssets": [
+    {
+      "id": "ast_admin_01",
+      "userId": "usr_live_admin",
+      "name": "PT Bank Central Asia Tbk (BBCA)",
+      "category": "SAHAM",
+      "quantity": 6000,
+      "buyPrice": 8850,
+      "currentPrice": 10350,
+      "notes": "60 Lot Saham Bluechip Dividen Konsisten"
+    },
+    {
+      "id": "ast_admin_02",
+      "userId": "usr_live_admin",
+      "name": "Sucorinvest Stable Fund",
+      "category": "REKSADANA",
+      "quantity": 18500,
+      "buyPrice": 2150,
+      "currentPrice": 2410,
+      "notes": "Reksadana Pendapatan Tetap Alokasi Kas Siaga"
+    },
+    {
+      "id": "ast_admin_03",
+      "userId": "usr_live_admin",
+      "name": "Logam Mulia Emas Antam CertiCard",
+      "category": "EMAS",
+      "quantity": 50,
+      "buyPrice": 1180000,
+      "currentPrice": 1490000,
+      "notes": "50 Gram Emas Batangan Fisik Brankas Kantor"
+    },
+    {
+      "id": "ast_admin_04",
+      "userId": "usr_live_admin",
+      "name": "Bitcoin (BTC) Reserve",
+      "category": "CRYPTO",
+      "quantity": 0.25,
+      "buyPrice": 820000000,
+      "currentPrice": 1080000000,
+      "notes": "Cadangan Aset Kripto Cold Hardware Wallet"
+    },
+    {
+      "id": "ast_admin_05",
+      "userId": "usr_live_admin",
+      "name": "Ruko Komersial 2 Lantai BSD Sinarmas",
+      "category": "PROPERTI",
+      "quantity": 1,
+      "buyPrice": 1350000000,
+      "currentPrice": 1580000000,
+      "notes": "Aset Properti Komersial Disewakan"
+    }
+  ],
+  "bankConnections": [
+    {
+      "id": "bnk_admin_01",
+      "userId": "usr_live_admin",
+      "institution": "BCA",
+      "accountNumber": "8820192831",
+      "accountName": "PT Cuanly Inovasi Digital",
+      "syncStatus": "CONNECTED",
+      "autoSync": true
+    },
+    {
+      "id": "bnk_admin_02",
+      "userId": "usr_live_admin",
+      "institution": "MANDIRI",
+      "accountNumber": "1370018291028",
+      "accountName": "PT Cuanly Inovasi Digital",
+      "syncStatus": "CONNECTED",
+      "autoSync": true
+    },
+    {
+      "id": "bnk_admin_03",
+      "userId": "usr_live_admin",
+      "institution": "BRI",
+      "accountNumber": "020601002918302",
+      "accountName": "PT Cuanly Inovasi Digital",
+      "syncStatus": "CONNECTED",
+      "autoSync": true
+    },
+    {
+      "id": "bnk_admin_04",
+      "userId": "usr_live_admin",
+      "institution": "GOPAY",
+      "accountNumber": "0811-9876-5432",
+      "accountName": "Cuanly Official Store",
+      "syncStatus": "CONNECTED",
+      "autoSync": true
+    }
+  ],
+  "businessProfile": {
+    "id": "biz_admin_01",
+    "userId": "usr_live_admin",
+    "businessName": "PT Cuanly Inovasi Finansial",
+    "npwp": "01.234.567.8-012.000",
+    "period": "2026",
+    "annualRevenue": 580000000,
+    "operatingExpense": 215000000,
+    "cashRunwayMonths": 22.4,
+    "taxRate": 0.005
+  },
+  "notifications": [
+    {
+      "id": "notif_admin_01",
+      "userId": "usr_live_admin",
+      "title": "Dividen Saham BBCA Berhasil Masuk",
+      "titleEn": "BBCA Stock Dividend Received",
+      "message": "Dividen sebesar Rp 4.850.000 telah masuk ke rekening BCA Prioritas Bisnis Anda.",
+      "messageEn": "Dividend of Rp 4,850,000 has been credited to your BCA Prioritas account.",
+      "type": "SUCCESS",
+      "isRead": false,
+      "link": "/investasi"
+    },
+    {
+      "id": "notif_admin_02",
+      "userId": "usr_live_admin",
+      "title": "Pelunasan Invoice Klien PT Sinar Digital",
+      "titleEn": "Client Invoice Paid by PT Sinar Digital",
+      "message": "Pembayaran invoice termin kedua Rp 6.000.000 berhasil diterima di kas perusahaan.",
+      "messageEn": "Second milestone payment of Rp 6,000,000 successfully received.",
+      "type": "SUCCESS",
+      "isRead": false,
+      "link": "/debts"
+    },
+    {
+      "id": "notif_admin_03",
+      "userId": "usr_live_admin",
+      "title": "Kalkulasi Estimasi Pajak UMKM 2026",
+      "titleEn": "SME Tax Estimate 2026",
+      "message": "Omzet kumulatif tahun 2026 mencapai Rp 580 Juta. Estimasi PPh Final PP 23 adalah Rp 2.900.000.",
+      "messageEn": "Cumulative 2026 revenue is Rp 580M. Estimated Final Income Tax is Rp 2,900,000.",
+      "type": "INFO",
+      "isRead": true,
+      "link": "/bisnis"
+    },
+    {
+      "id": "notif_admin_04",
+      "userId": "usr_live_admin",
+      "title": "Auto-Sync Bank BCA & Mandiri Aktif",
+      "titleEn": "BCA & Mandiri Auto-Sync Active",
+      "message": "Sistem auto-sync berhasil memvalidasi 24 mutasi terbaru secara otomatis tanpa jeda.",
+      "messageEn": "Auto-sync engine successfully validated 24 fresh mutations automatically.",
+      "type": "INFO",
+      "isRead": true,
+      "link": "/bank-sync"
+    }
+  ]
+}
