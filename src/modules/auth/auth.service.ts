@@ -197,7 +197,7 @@ export class AuthService {
               theme: 'light',
               locale: 'en',
               activeCurrency: 'IDR',
-              monthlyAllowance: BigInt(6700000),
+              monthlyAllowance: BigInt(0),
               spendingWarningThreshold: 80,
               ocrSpeed: 'standard',
               ocrAutoCat: true,

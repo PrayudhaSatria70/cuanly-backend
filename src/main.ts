@@ -31,19 +31,30 @@ async function bootstrap() {
     next();
   });
 
-  // Enable CORS with origin validation
+  // Enable CORS with strict origin validation (SonarQube / CWE-942 Compliance)
+  const allowedOriginsEnv = process.env.CORS_ALLOWED_ORIGINS
+    ? process.env.CORS_ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+    : [];
+
   app.enableCors({
     origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
       if (!origin) return callback(null, true);
+
+      if (allowedOriginsEnv.length > 0 && allowedOriginsEnv.includes(origin)) {
+        return callback(null, true);
+      }
+
       const isAllowed =
         origin.includes('localhost') ||
         origin.includes('127.0.0.1') ||
         origin.endsWith('.vercel.app') ||
         origin.includes('cuanly');
+
       if (isAllowed) {
         callback(null, true);
       } else {
-        callback(null, true);
+        callback(new Error('Origin blocked by CORS policy'));
       }
     },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

@@ -19,6 +19,10 @@ import { BerandaModule } from './modules/beranda/beranda.module';
 import { ProfilModule } from './modules/profil/profil.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { PricingModule } from './modules/pricing/pricing.module';
+import { InvestmentsModule } from './modules/investments/investments.module';
+import { BankSyncModule } from './modules/bank-sync/bank-sync.module';
+import { AiAnalyticsModule } from './modules/ai-analytics/ai-analytics.module';
+import { BusinessModule } from './modules/business/business.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -51,6 +55,10 @@ import { AppController } from './app.controller';
     ProfilModule,
     SettingsModule,
     PricingModule,
+    InvestmentsModule,
+    BankSyncModule,
+    AiAnalyticsModule,
+    BusinessModule,
   ],
   providers: [
     {

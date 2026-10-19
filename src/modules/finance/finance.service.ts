@@ -26,7 +26,7 @@ export class FinanceService {
       const settings = await this.prisma.userSettings.findUnique({
         where: { userId },
       });
-      const monthlyAllowance = settings ? Number(settings.monthlyAllowance) : 6700000;
+      const monthlyAllowance = settings ? Number(settings.monthlyAllowance) : (userId === "usr_demo_1" ? 6700000 : 0);
 
       // 2. Aggregate transactions for this month
       const thisMonthTx = await this.prisma.transaction.findMany({
@@ -82,14 +82,25 @@ export class FinanceService {
         monthlyAllowance,
       };
     } catch {
+      if (userId === 'usr_demo_1') {
+        return {
+          totalBalance: 12500000,
+          thisMonthIncome: 8500000,
+          thisMonthExpense: 3200000,
+          totalBudgetLimit: 6700000,
+          totalBudgetSpent: 3200000,
+          remainingBudget: 3500000,
+          monthlyAllowance: 6700000,
+        };
+      }
       return {
-        totalBalance: 12500000,
-        thisMonthIncome: 8500000,
-        thisMonthExpense: 3200000,
-        totalBudgetLimit: 6700000,
-        totalBudgetSpent: 3200000,
-        remainingBudget: 3500000,
-        monthlyAllowance: 6700000,
+        totalBalance: 0,
+        thisMonthIncome: 0,
+        thisMonthExpense: 0,
+        totalBudgetLimit: 0,
+        totalBudgetSpent: 0,
+        remainingBudget: 0,
+        monthlyAllowance: 0,
       };
     }
   }
@@ -114,14 +125,18 @@ export class FinanceService {
     } catch {
       let list = this.inMemoryBudgets.get(userId);
       if (!list) {
-        list = [
-          { id: 'bgt_01', userId, categoryId: 'cat_food', categorySlug: 'makanan-minuman', limitAmount: 1500000, period: targetPeriod },
-          { id: 'bgt_02', userId, categoryId: 'cat_transport', categorySlug: 'transportasi', limitAmount: 800000, period: targetPeriod },
-          { id: 'bgt_03', userId, categoryId: 'cat_bills', categorySlug: 'tagihan-utilitas', limitAmount: 1200000, period: targetPeriod },
-          { id: 'bgt_04', userId, categoryId: 'cat_shopping', categorySlug: 'belanja-kebutuhan', limitAmount: 1000000, period: targetPeriod },
-          { id: 'bgt_05', userId, categoryId: 'cat_health', categorySlug: 'kesehatan', limitAmount: 500000, period: targetPeriod },
-          { id: 'bgt_06', userId, categoryId: 'cat_education', categorySlug: 'edukasi-kursus', limitAmount: 700000, period: targetPeriod },
-        ];
+        if (userId === 'usr_demo_1') {
+          list = [
+            { id: 'bgt_01', userId, categoryId: 'cat_food', categorySlug: 'makanan-minuman', limitAmount: 1500000, period: targetPeriod },
+            { id: 'bgt_02', userId, categoryId: 'cat_transport', categorySlug: 'transportasi', limitAmount: 800000, period: targetPeriod },
+            { id: 'bgt_03', userId, categoryId: 'cat_bills', categorySlug: 'tagihan-utilitas', limitAmount: 1200000, period: targetPeriod },
+            { id: 'bgt_04', userId, categoryId: 'cat_shopping', categorySlug: 'belanja-kebutuhan', limitAmount: 1000000, period: targetPeriod },
+            { id: 'bgt_05', userId, categoryId: 'cat_health', categorySlug: 'kesehatan', limitAmount: 500000, period: targetPeriod },
+            { id: 'bgt_06', userId, categoryId: 'cat_education', categorySlug: 'edukasi-kursus', limitAmount: 700000, period: targetPeriod },
+          ];
+        } else {
+          list = [];
+        }
         this.inMemoryBudgets.set(userId, list);
       }
       return list;

@@ -12,7 +12,7 @@ export class UsersService {
     if (!settings) return null;
     return {
       ...settings,
-      monthlyAllowance: settings.monthlyAllowance !== undefined ? Number(settings.monthlyAllowance) : 6700000,
+      monthlyAllowance: settings.monthlyAllowance !== undefined ? Number(settings.monthlyAllowance) : (settings.userId === "usr_demo_1" ? 6700000 : 0),
     };
   }
 
@@ -29,7 +29,7 @@ export class UsersService {
             theme: 'light',
             locale: 'en',
             activeCurrency: 'IDR',
-            monthlyAllowance: BigInt(6700000),
+            monthlyAllowance: BigInt(userId === "usr_demo_1" ? 6700000 : 0),
             spendingWarningThreshold: 80,
             ocrSpeed: 'standard',
             ocrAutoCat: true,
@@ -53,7 +53,7 @@ export class UsersService {
           theme: 'light',
           locale: 'en',
           activeCurrency: 'IDR',
-          monthlyAllowance: 6700000,
+          monthlyAllowance: userId === "usr_demo_1" ? 6700000 : 0,
           spendingWarningThreshold: 80,
           ocrSpeed: 'standard',
           ocrAutoCat: true,

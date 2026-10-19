@@ -31,6 +31,9 @@ model User {
   workspaceMembers WorkspaceMember[]
   notifications    Notification[]
   customCategories Category[]
+  investmentAssets InvestmentAsset[]
+  bankConnections  BankConnection[]
+  businessProfile  BusinessProfile?
 
   @@map("users")
 }
@@ -63,7 +66,7 @@ model Category {
   fallbackName String   @map("fallback_name")
   icon         String
   color        String
-  type         String   // EXPENSE, INCOME
+  type         String // EXPENSE, INCOME
   isSystem     Boolean  @default(true) @map("is_system")
   userId       String?  @map("user_id")
   createdAt    DateTime @default(now()) @map("created_at")
@@ -79,11 +82,12 @@ model Wallet {
   id            String   @id @default(cuid())
   userId        String   @map("user_id")
   name          String
-  type          String   // CASH, BANK, E_WALLET, SAVINGS
+  type          String // CASH, BANK, E_WALLET, SAVINGS, INVESTMENT
   accountNumber String?  @map("account_number")
   balance       BigInt   @default(0)
   color         String?  @default("#4D8DBA")
   isShared      Boolean  @default(false) @map("is_shared")
+  sharedRole    String?  @default("ADMIN") @map("shared_role") // OWNER, ADMIN, MEMBER
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
@@ -100,7 +104,7 @@ model Transaction {
   categoryId     String   @map("category_id")
   categoryName   String   @map("category_name")
   categorySlug   String   @map("category_slug")
-  type           String   // EXPENSE, INCOME
+  type           String // EXPENSE, INCOME
   amount         BigInt
   currency       String?  @default("IDR")
   currencySymbol String?  @default("Rp") @map("currency_symbol")
@@ -110,9 +114,9 @@ model Transaction {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  wallet   Wallet?   @relation(fields: [walletId], references: [id], onDelete: SetNull)
-  category Category  @relation(fields: [categoryId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet   Wallet?  @relation(fields: [walletId], references: [id], onDelete: SetNull)
+  category Category @relation(fields: [categoryId], references: [id])
 
   @@map("transactions")
 }
@@ -123,7 +127,7 @@ model BudgetLimit {
   categoryId   String   @map("category_id")
   categorySlug String   @map("category_slug")
   limitAmount  BigInt   @map("limit_amount")
-  period       String   // YYYY-MM
+  period       String // YYYY-MM
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
@@ -135,16 +139,20 @@ model BudgetLimit {
 }
 
 model Debt {
-  id         String   @id @default(cuid())
-  userId     String   @map("user_id")
-  type       String   // DEBT, RECEIVABLE
-  personName String   @map("person_name")
-  amount     BigInt
-  dueDate    String   @map("due_date")
-  notes      String?
-  isSettled  Boolean  @default(false) @map("is_settled")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  type              String // DEBT, RECEIVABLE
+  personName        String   @map("person_name")
+  amount            BigInt
+  dueDate           String   @map("due_date")
+  notes             String?
+  isSettled         Boolean  @default(false) @map("is_settled")
+  tenorMonths       Int?     @default(1) @map("tenor_months")
+  interestRate      Float?   @default(0) @map("interest_rate")
+  installmentAmount BigInt?  @map("installment_amount")
+  paidAmount        BigInt?  @default(0) @map("paid_amount")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -164,6 +172,57 @@ model WorkspaceMember {
   owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   @@map("workspace_members")
+}
+
+model InvestmentAsset {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  name         String
+  category     String   // REKSADANA, SAHAM, EMAS, CRYPTO, PROPERTI
+  quantity     Float    @default(1)
+  buyPrice     BigInt   @map("buy_price")
+  currentPrice BigInt   @map("current_price")
+  notes        String?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("investment_assets")
+}
+
+model BankConnection {
+  id            String    @id @default(cuid())
+  userId        String    @map("user_id")
+  institution   String    // BCA, MANDIRI, BRI, BNI, GOPAY, OVO, DANA
+  accountNumber String    @map("account_number")
+  accountName   String    @map("account_name")
+  syncStatus    String    @default("CONNECTED") @map("sync_status") // CONNECTED, SYNCING, ERROR, DISCONNECTED
+  lastSyncAt    DateTime? @map("last_sync_at")
+  autoSync      Boolean   @default(true) @map("auto_sync")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("bank_connections")
+}
+
+model BusinessProfile {
+  id               String   @id @default(cuid())
+  userId           String   @unique @map("user_id")
+  businessName     String   @map("business_name")
+  npwp             String?
+  period           String   @default("2026")
+  annualRevenue    BigInt   @default(0) @map("annual_revenue")
+  operatingExpense BigInt   @default(0) @map("operating_expense")
+  cashRunwayMonths Float    @default(12) @map("cash_runway_months")
+  taxRate          Float    @default(0.005) @map("tax_rate") // 0.5% PPh Final UMKM
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("business_profiles")
 }
 
 model Mitra {
