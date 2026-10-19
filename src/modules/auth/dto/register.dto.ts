@@ -33,4 +33,14 @@ export class RegisterDto {
   @IsOptional()
   @IsString()
   phone?: string;
+
+  @ApiPropertyOptional({ example: 'GOLD', description: 'Selected subscription plan tier (FREE, SILVER, GOLD, B2B)' })
+  @IsOptional()
+  @IsString()
+  subscriptionTier?: string;
+
+  @ApiPropertyOptional({ example: 'GOLD', description: 'Plan identifier' })
+  @IsOptional()
+  @IsString()
+  plan?: string;
 }

@@ -146,6 +146,8 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
+    const requestedTier = (registerDto.subscriptionTier || registerDto.plan || 'FREE').toUpperCase();
+    const targetTier = ['FREE', 'SILVER', 'GOLD', 'B2B'].includes(requestedTier) ? requestedTier : 'FREE';
     const cleanEmail = registerDto.email.trim().toLowerCase();
     const cleanName = registerDto.name.trim();
     const cleanPass = (registerDto.password || registerDto.pin || '').trim();
@@ -187,7 +189,7 @@ export class AuthService {
           username: resolvedUsername,
           phone: registerDto.phone?.trim() || null,
           role: 'USER',
-          subscriptionTier: 'FREE',
+          subscriptionTier: targetTier,
           passwordHash: hash,
           pinHash: hash,
           settings: {
@@ -218,7 +220,7 @@ export class AuthService {
         username: resolvedUsername,
         phone: registerDto.phone?.trim() || null,
         role: 'USER',
-        subscriptionTier: 'FREE',
+        subscriptionTier: targetTier,
         isActive: true,
         createdAt: new Date().toISOString(),
       };
