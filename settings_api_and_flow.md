@@ -182,3 +182,12 @@ Dokumentasi sinkronisasi tri-repo (`cuanly-database`, `cuanly-backend`, `cuanly-
 - **Kompilasi & Build Backend**:
   - `tsc --noEmit`: **0 errors** (PASSED).
   - `nest build`: **dist/ bundle compiled** (PASSED).
+
+---
+
+## 8. Subscription Features Full-Page Navigation & Paywall Logic
+
+Dokumentasi arsitektur routing frontend yang terhubung ke backend:
+- **Paritas Halaman Penuh (Full Page)**: Seluruh 7 fitur langganan (`/wallets`, `/debts`, `/workspace`, `/bank-sync`, `/investasi`, `/analitik-ai`, `/bisnis`) beroperasi sebagai halaman penuh setara dengan User Menu (`/beranda`, `/transaksi`, `/budget`) dan Admin Backoffice (`/admin/*`).
+- **Eliminasi Modal untuk Akun Sesuai Plan**: Akun dengan plan yang sesuai (Silver/Gold/B2B/Admin) masuk langsung ke halaman penuh tanpa ada popup modal atau tombol redundant "Open Quick Modal".
+- **Modal Paywall Khusus Free Plan**: Akun Free plan (atau belum memenuhi plan) secara otomatis memunculkan `openUpgradeModal` saat mengakses halaman fitur terkunci, serta menampilkan kartu CTA upgrade yang dapat diklik untuk menuju checkout.
